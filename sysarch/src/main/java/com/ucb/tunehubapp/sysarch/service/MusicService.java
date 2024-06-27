@@ -4,4 +4,5 @@ package com.ucb.tunehubapp.sysarch.service;
 public class MusicService {
     String Music;
     String Title;
+    String URL;
 }
