@@ -19,62 +19,93 @@ import com.ucb.tunehubapp.sysarch.service.UserService;
 import springfox.documentation.annotations.ApiIgnore;
 
 
-@RestController
-public class UserController {
 
-
-    @Autowired
-    UserRepository repo;
-
-    @ApiIgnore
-    @RequestMapping(value="/")
-    public void redirect(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/swagger-ui.html");
-    }
+    @RestController
+    public class UserController {
     
-    @GetMapping("/getAllUsers")
-    public List<User> getAllUsers(){
-        return repo.findAll();
-    }
+        @Autowired
+        private UserService userService;
+        
+        @Autowired
+        UserRepository repo;
 
-
-    @PostMapping("/register")
-    public String register(User user){
-        repo.save(user);
-        return "Registration Successful.";
-    }
-
-    @Autowired
-    private UserService userService;
-
-    @PostMapping("/login")
-    public String login(@RequestBody UserLoginRequest request) {
-        String username = request.getUsername();
-        String password = request.getPassword();
-
-        // Call the service method to check login credentials
-        return userService.login(username, password);
-    }
-
-    static class UserLoginRequest {
-        private String username;
-        private String password;
-
-        // Getters and setters
-        public String getUsername() {
-            return username;
+        @ApiIgnore
+        @RequestMapping(value="/")
+        public void redirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui.html");
         }
-
-        public void setUsername(String username) {
-            this.username = username;
+    
+        @GetMapping("/getAllUsers")
+        public List<User> getAllUsers() {
+            try {
+                return repo.findAll();
+            } catch (Exception e) {
+                // Log the exception for debugging
+                e.printStackTrace(); // or use a logging framework like SLF4J
+        
+                // Optionally, you can throw a custom exception or return an error response
+                throw new RuntimeException("Failed to fetch all users from database.");
+            }
         }
-
-        public String getPassword() {
-            return password;
+    
+        @PostMapping("/register")
+        public String register(@RequestBody UserRegistrationRequest request) {
+            String username = request.getUsername();
+            String password = request.getPassword();
+    
+            return userService.register(username, password);
         }
-
-        public void setPassword(String password) {
-            this.password = password;
+    
+        @PostMapping("/login")
+        public String login(@RequestBody UserLoginRequest request) {
+            String username = request.getUsername();
+            String password = request.getPassword();
+    
+        
+            return userService.login(username, password);
+        }
+    
+        static class UserRegistrationRequest {
+            private String username;
+            private String password;
+    
+            // Getters and setters
+            public String getUsername() {
+                return username;
+            }
+    
+            public void setUsername(String username) {
+                this.username = username;
+            }
+    
+            public String getPassword() {
+                return password;
+            }
+    
+            public void setPassword(String password) {
+                this.password = password;
+            }
+        }
+    
+        static class UserLoginRequest {
+            private String username;
+            private String password;
+    
+            // Getters and setters
+            public String getUsername() {
+                return username;
+            }
+    
+            public void setUsername(String username) {
+                this.username = username;
+            }
+    
+            public String getPassword() {
+                return password;
+            }
+    
+            public void setPassword(String password) {
+                this.password = password;
+            }
         }
     }
-}

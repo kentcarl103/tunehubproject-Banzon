@@ -7,7 +7,7 @@ import com.ucb.tunehubapp.sysarch.api.model.User;
 
 
 @Repository
-public interface UserRepository extends MongoRepository<User, Integer> {
+public interface UserRepository extends MongoRepository<User, String> {
 
     User findByUsername(String username);
     
