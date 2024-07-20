@@ -31,7 +31,7 @@ public class MusicController {
     }
 
     @PostMapping("/addingMusic")
-        public String AddingMusic(@RequestBody AddMusicRequest request) {
+        public String addingMusic(@RequestBody AddMusicRequest request) {
             String title = request.getTitle();
             String artist = request.getArtist();
             String urlLink = request.getUrlLink();
