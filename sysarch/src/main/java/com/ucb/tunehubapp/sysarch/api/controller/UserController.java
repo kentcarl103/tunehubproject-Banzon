@@ -85,6 +85,17 @@ import springfox.documentation.annotations.ApiIgnore;
             public void setPassword(String password) {
                 this.password = password;
             }
+
+            public String getTitle() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getTitle'");
+            }
+
+            public String getArtist() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getArtist'");
+            }
+
         }
     
         static class UserLoginRequest {

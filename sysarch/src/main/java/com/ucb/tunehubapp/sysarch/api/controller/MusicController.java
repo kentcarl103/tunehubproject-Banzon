@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ucb.tunehubapp.sysarch.api.model.Music;
 import com.ucb.tunehubapp.sysarch.repository.MusicRepository;
+import com.ucb.tunehubapp.sysarch.service.MusicService;
 
 
 @RestController
@@ -21,29 +21,53 @@ public class MusicController {
     @Autowired
     private MusicRepository musicRepository;
 
+    @Autowired
+    private MusicService musicService;
+
     @GetMapping("/getAllMusic")
     public List<Music> getAllMusic(){
         return musicRepository.findAll();
     }
 
-    @GetMapping("/getMusicByTitle")
-    public List<Music> getMusicByTitle(@RequestParam String title){
-        return musicRepository.findByTitle(title);
+    @PostMapping("/addingMusic")
+        public String AddingMusic(@RequestBody AddMusicRequest request) {
+            String title = request.getTitle();
+            String artist = request.getArtist();
+            String urlLink = request.getUrlLink();
+    
+            return musicService.addingMusic(title, artist, urlLink);
+        }
+        
+    static class AddMusicRequest {
+        private String title;
+        private String artist;
+        private String urlLink;
+
+        // Getters and setters
+        public String getTitle() {
+            return title;
+        }
+
+        public String getArtist() {
+            return artist;
+        }
+
+        public String getUrlLink() {
+            return urlLink;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setArtist(String artist) {
+            this.artist = artist;
+        }
+
+        public void setUrlLink(String urlLink) {
+            this.urlLink = urlLink;
+        }
+
     }
 
-    @GetMapping("/getMusicByArtist")
-    public List<Music> getMusicByArtist(@RequestParam String artist){
-        return musicRepository.findByArtist(artist);
-    }
-
-    @GetMapping("/getMusicByUrl")
-    public List<Music> getMusicByUrl(@RequestParam String url){
-        return musicRepository.findByUrl(url);
-    }
-
-    @PostMapping("/addMusic")
-    public String addMusic(@RequestBody Music music){
-        musicRepository.save(music);
-        return "Music Successfully added.";
-    }
 }

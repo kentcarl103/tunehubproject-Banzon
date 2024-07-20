@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 import com.ucb.tunehubapp.sysarch.api.model.Music;
 
 @Repository
-public interface MusicRepository extends MongoRepository<Music,String> {
+public interface MusicRepository extends MongoRepository<Music, String> {
 
     List<Music> findByTitle(String title);
 
     List<Music> findByArtist(String artist);
 
-    List<Music> findByUrl(String url);
+    Music findByUrlLink(String urlLink);
+
 }
