@@ -3,6 +3,7 @@ package com.ucb.tunehubapp.sysarch.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ import com.ucb.tunehubapp.sysarch.api.model.Music;
 import com.ucb.tunehubapp.sysarch.repository.MusicRepository;
 import com.ucb.tunehubapp.sysarch.service.MusicService;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/music")
 public class MusicController {
